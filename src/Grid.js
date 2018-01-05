@@ -1,39 +1,63 @@
 import React, { Component } from 'react';
 
 class Grid extends Component {
-  constructor(props) {
-    super(props);
+  renderItems() {
+    let itemsArray = [];
+    for (let i = 1; i <= this.props.numColumns; i++) {
+      const bgColor = 50 + i * 40;
+      itemsArray.push(
+        <div
+          className={`item${i}`}
+          style={{ gridColumn: i, backgroundColor: `rgb(0,${bgColor},255)` }}
+          key={i}
+        >
+          {`Item${i}`}
+        </div>
+      )
+    }
+
+    return itemsArray;
   }
 
   render() {
-    const { values } = this.props;
+    const { values, numColumns } = this.props;
+    const { gridTemplateColumns, justifyItems, alignItems, justifyContent, alignContent } = values;
+    // const { justifyItems, alignItems, justifyContent, alignContent } = values;
     const gridColumnGap = values.gridColumnGap ? 10 : 0;
     const gridRowGap = values.gridRowGap ? 10 : 0;
-    const { justifyItems, alignItems, justifyContent, alignContent } = values;
-    const gridTemplateArea1 = 'header header header';
-    const gridTemplateArea2 = 'body body sidebar';
-    const gridTemplateAreas = `"${gridTemplateArea1}" "${gridTemplateArea2}"`;
+    const hfColumnEnd = numColumns + 1;
+    // const gridTemplateColumns = '30% 30% 30%';
 
     return (
       <section
         className="grid-container"
         style={{
+          gridTemplateColumns,
           gridColumnGap,
           gridRowGap,
           justifyItems,
           alignItems,
           justifyContent,
           alignContent,
-          gridTemplateAreas
         }}
       >
-        <div className="header">Header</div>
-        <div className="body">Body</div>
-        <div className="sidebar">Sidebar</div>
-        <div className="item1">Item1</div>
-        <div className="item2">Item2</div>
-        <div className="item3">Item3</div>
-        <div className="footer">Footer</div>
+        <div
+          className="header"
+          style={{ gridColumn: `1 / ${hfColumnEnd}` }}
+        >Header</div>
+        <div
+          className="body"
+          style={{ gridColumn: `1 / ${numColumns}` }}
+        >Body</div>
+        <div
+          className="sidebar"
+          style={{ gridColumn: numColumns }}
+        >Sidebar</div>
+        {this.renderItems()}
+        <div
+          className="footer"
+          style={{ gridColumn: `1 / ${hfColumnEnd}` }}
+          >Footer</div>
       </section>
     );
   }

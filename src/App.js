@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Select from 'react-select';
 import Grid from './Grid';
 import BackgroundGrid from './BackgroundGrid';
+import ColumnForm from './ColumnForm';
 import logo from './logo.svg';
 import 'react-select/dist/react-select.css';
 import './App.css';
@@ -45,16 +46,19 @@ class App extends Component {
         ]
       },
       values: {
+        gridTemplateColumns: '1fr 1fr 1fr 1fr',
         gridColumnGap: false,
         gridRowGap: false,
         justifyItems: 'stretch',
         alignItems: 'stretch',
         justifyContent: 'start',
         alignContent: 'start'
-      }
+      },
+      numColumns: 4
     };
 
     this.onChange = this.onChange.bind(this);
+    this.columnForm = this.columnForm.bind(this);
   }
 
   onChange(item) {
@@ -63,6 +67,18 @@ class App extends Component {
     state.values[key] = value;
 
     this.setState(state);
+  }
+
+  columnForm(value) {
+    const numColumns = this.calcNumColumns(value);
+    const state = this.state;
+    state.values.gridTemplateColumns = value;
+    state.numColumns = numColumns;
+    this.setState(state);
+  }
+
+  calcNumColumns(value) {
+    return value.split(" ").length;
   }
 
   render() {
@@ -76,8 +92,9 @@ class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
         <div className="master-container">
-          <div className="dropdown-container first-dropdown">
-            <h4 className="dropdown-title">Grid Column Gap</h4>
+          <ColumnForm handleSubmit={this.columnForm} value={''} />
+          <div className="input-container">
+            <h4 className="input-title">Grid Column Gap</h4>
             <Select
               onChange={this.onChange}
               options={this.state.options.gridColumnGap}
@@ -85,8 +102,8 @@ class App extends Component {
               backspaceRemoves={false}
             />
           </div>
-          <div className="dropdown-container">
-            <h4 className="dropdown-title">Grid Row Gap</h4>
+          <div className="input-container">
+            <h4 className="input-title">Grid Row Gap</h4>
             <Select
               onChange={this.onChange}
               options={this.state.options.gridRowGap}
@@ -94,8 +111,8 @@ class App extends Component {
               backspaceRemoves={false}
             />
           </div>
-          <div className="dropdown-container">
-            <h4 className="dropdown-title">Justify Items</h4>
+          <div className="input-container">
+            <h4 className="input-title">Justify Items</h4>
             <Select
               onChange={this.onChange}
               options={this.state.options.justifyItems}
@@ -103,8 +120,8 @@ class App extends Component {
               backspaceRemoves={false}
             />
           </div>
-          <div className="dropdown-container">
-            <h4 className="dropdown-title">Align Items</h4>
+          <div className="input-container">
+            <h4 className="input-title">Align Items</h4>
             <Select
               onChange={this.onChange}
               options={this.state.options.alignItems}
@@ -112,8 +129,8 @@ class App extends Component {
               backspaceRemoves={false}
             />
           </div>
-          <div className="dropdown-container">
-            <h4 className="dropdown-title">Justify Content</h4>
+          <div className="input-container">
+            <h4 className="input-title">Justify Content</h4>
             <Select
               onChange={this.onChange}
               options={this.state.options.justifyContent}
@@ -121,8 +138,8 @@ class App extends Component {
               backspaceRemoves={false}
             />
           </div>
-          <div className="dropdown-container">
-            <h4 className="dropdown-title">Align Content</h4>
+          <div className="input-container">
+            <h4 className="input-title">Align Content</h4>
             <Select
               onChange={this.onChange}
               options={this.state.options.alignContent}
@@ -130,8 +147,8 @@ class App extends Component {
               backspaceRemoves={false}
             />
           </div>
-          <BackgroundGrid values={this.state.values} />
-          <Grid values={this.state.values} />
+          <BackgroundGrid values={this.state.values} numColumns={this.state.numColumns} />
+          <Grid values={this.state.values} numColumns={this.state.numColumns} />
         </div>
       </div>
     );
