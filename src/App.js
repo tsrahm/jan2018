@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Select from 'react-select';
 import Grid from './Grid';
 import BackgroundGrid from './BackgroundGrid';
+import ForegroundGrid from './ForegroundGrid';
 import ColumnForm from './ColumnForm';
 import logo from './logo.svg';
 import 'react-select/dist/react-select.css';
@@ -43,6 +44,10 @@ class App extends Component {
           { value: 'end', label: 'End', key: 'alignContent' },
           { value: 'center', label: 'Center', key: 'alignContent' },
           { value: 'stretch', label: 'Stretch', key: 'alignContent' }
+        ],
+        display: [
+          { value: true, label: 'Yes', key: 'display' },
+          { value: false, label: 'No', key: 'display' }
         ]
       },
       values: {
@@ -52,7 +57,8 @@ class App extends Component {
         justifyItems: 'stretch',
         alignItems: 'stretch',
         justifyContent: 'start',
-        alignContent: 'start'
+        alignContent: 'start',
+        display: false
       },
       numColumns: 4
     };
@@ -89,7 +95,7 @@ class App extends Component {
           <h1 className="App-title">CSS Grid Playground</h1>
         </header>
         <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
+          Play around with the CSS Grid settings. Don't be scared.
         </p>
         <div className="master-container">
           <ColumnForm handleSubmit={this.columnForm} value={''} />
@@ -147,8 +153,18 @@ class App extends Component {
               backspaceRemoves={false}
             />
           </div>
+          <div className="input-container">
+            <h4 className="input-title">Show Grid</h4>
+            <Select
+              onChange={this.onChange}
+              options={this.state.options.display}
+              value={this.state.values.display}
+              backspaceRemoves={false}
+            />
+          </div>
           <BackgroundGrid values={this.state.values} numColumns={this.state.numColumns} />
           <Grid values={this.state.values} numColumns={this.state.numColumns} />
+          <ForegroundGrid values={this.state.values} numColumns={this.state.numColumns} />
         </div>
       </div>
     );

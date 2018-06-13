@@ -8,7 +8,7 @@ class Grid extends Component {
       itemsArray.push(
         <div
           className={`item${i}`}
-          style={{ gridColumn: i, backgroundColor: `rgb(0,${bgColor},255)` }}
+          style={{ gridColumn: i, gridRow: 3, backgroundColor: `rgb(0,${bgColor},255)` }}
           key={i}
         >
           {`Item${i}`}
@@ -43,20 +43,20 @@ class Grid extends Component {
       >
         <div
           className="header"
-          style={{ gridColumn: `1 / ${hfColumnEnd}` }}
+          style={{ gridColumn: `1 / ${hfColumnEnd}`, gridRow: 1, backgroundColor: 'indianred' }}
         >Header</div>
         <div
           className="body"
-          style={{ gridColumn: `1 / ${numColumns}` }}
+          style={{ gridColumn: `1 / ${numColumns}`, gridRow: 2, backgroundColor: 'forestgreen' }}
         >Body</div>
         <div
           className="sidebar"
-          style={{ gridColumn: numColumns }}
+          style={{ gridColumn: numColumns, gridRow: 2, backgroundColor: 'limegreen' }}
         >Sidebar</div>
         {this.renderItems()}
         <div
           className="footer"
-          style={{ gridColumn: `1 / ${hfColumnEnd}` }}
+          style={{ gridColumn: `1 / ${hfColumnEnd}`, gridRow: 4, backgroundColor: 'khaki' }}
           >Footer</div>
       </section>
     );

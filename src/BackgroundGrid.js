@@ -4,11 +4,11 @@ class BackgroundGrid extends Component {
   renderItems() {
     let itemsArray = [];
     for (let i = 1; i <= this.props.numColumns; i++) {
-      const bgColor = i * 2;
+      const bgColor = i === 5 ? 'b' : i * 2;
       itemsArray.push(
         <div
           className={`block-${i}`}
-          style={{ gridColumn: i, backgroundColor: `#${bgColor}${bgColor}${bgColor}` }}
+          style={{ gridColumn: i, gridRow: 3, backgroundColor: `#${bgColor}${bgColor}${bgColor}` }}
           key={i}
         >
         </div>
@@ -39,23 +39,20 @@ class BackgroundGrid extends Component {
         >
           <div
             className="block-header"
-            style={{ gridColumn: `1 / ${hfColumnEnd}`}}
+            style={{ gridColumn: `1 / ${hfColumnEnd}`, gridRow: 1, backgroundColor: '#999' }}
           ></div>
           <div
             className="block-body"
-            style={{ gridColumn: `1 / ${numColumns}` }}
+            style={{ gridColumn: `1 / ${numColumns}`, gridRow: 2, backgroundColor: '#555' }}
           ></div>
           <div
             className="block-sidebar"
-            style={{ gridColumn: numColumns }}
+            style={{ gridColumn: numColumns, gridRow: 2, backgroundColor: '#777' }}
           ></div>
           {this.renderItems()}
-          <div className="block-4" />
-          <div className="block-5" />
-          <div className="block-6" />
           <div
             className="block-footer"
-            style={{ gridColumn: `1 / ${hfColumnEnd}`}}
+            style={{ gridColumn: `1 / ${hfColumnEnd}`, gridRow: 4, backgroundColor: '#333' }}
           ></div>
         </section>
     );
